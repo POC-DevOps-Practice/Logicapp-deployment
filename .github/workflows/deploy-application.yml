@@ -26,11 +26,11 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     steps:
     - name: 'Checkout'
-      uses: actions/checkout@v1
+      uses: actions/checkout@v4
     - name: Package
       run: (cd src/LogicAppsStandardDemo; mkdir -p ../../output; zip -r ../../output/workflow.zip .)
     - name: 'Upload Package'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: workflow
         path: ./output/
@@ -55,7 +55,6 @@ jobs:
 
       - run: |
           echo "Azure Region: ${{vars.AZURE_REGION}}"
-          echo "LogicApp Plan Name: ${{vars.LOGICAPPPLAN_NAME}}"
           echo "LogicApp Name: ${{vars.LOGICAPP_NAME}} "
           echo "Workload Environment: ${{vars.WORKLOAD_ENVIRONMENT}}"
 
