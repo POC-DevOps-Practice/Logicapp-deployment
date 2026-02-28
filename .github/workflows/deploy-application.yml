@@ -86,7 +86,7 @@ jobs:
           echo "Deployment triggered successfully."
           
       - name: Update LogicApp Settings
-        uses: azure/appservice-settings@v2
+        uses: azure/appservice-settings@v1
         with:
           app-name: ${{ vars.LOGICAPP_NAME }}
           app-settings-json: |
