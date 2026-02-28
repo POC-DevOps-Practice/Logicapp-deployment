@@ -1,19 +1,33 @@
 name: Build and deploy application
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       environment:
-        type: environment
-        description: 'environment to run on'
+        description: "Environment to deploy"
         required: true
-        default: 'development'
+        type: choice
+        options:
+          - dev
+          - qa
+
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       environment:
+#         type: environment
+#         description: 'environment to run on'
+#         required: true
+#         default: 'development'
         
-  workflow_call:
-    inputs:
-      environment:
-        required: true
-        type: string
+#   workflow_call:
+#     inputs:
+#       environment:
+#         required: true
+#         type: string
 
 permissions:
       id-token: write
@@ -23,7 +37,6 @@ jobs:
   build:
     name: Build LogicApp Demo
     runs-on: self-hosted
-    environment: ${{ github.event.inputs.environment }}
     steps:
     - name: 'Checkout'
       uses: actions/checkout@v4
@@ -36,10 +49,11 @@ jobs:
         path: ./output/
         retention-days: 1
 
-  Deploy:
+  Deploy-Dev:
+      if: github.ref == 'refs/heads/main'
       runs-on: self-hosted
       needs: build
-      environment: ${{ github.event.inputs.environment }}
+      environment: dev
       steps:
       - name: 'Az CLI login'
         uses: azure/login@v2
@@ -99,4 +113,39 @@ jobs:
               {"name":"testconnstr","value":"testconnstrvalue", "type":"Custom", "slotSetting":"false"}
             ]
 
+  Deploy-QA:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'qa'
+    needs: build
+    runs-on: self-hosted
+    environment: qa   # 🔥 Approval happens here
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: workflow
+          path: ./output/
+
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to QA
+        run: |
+          az webapp deployment source config-zip \
+            --resource-group ${{ vars.QA_RESOURCE_GROUP }} \
+            --name ${{ vars.QA_LOGICAPP_NAME }} \
+            --src ./output/workflow.zip
+      - name: Update LogicApp Settings
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: ${{ vars.QA_LOGICAPP_NAME }}
+          app-settings-json: |
+            [
+              {"name":"CallRestApiURI","value":"${{ vars.QA_CallRestApiURI }}","slotSetting":"false"},
+              {"name":"APIBaseURI","value":"https://webhook.site/c57923f4-f729-49ec-b123-aab28ec21ad3","slotSetting":"false"}
+            ]
+          connection-strings-json: |
+            [
+              {"name":"testconnstr","value":"testconnstrvalue", "type":"Custom", "slotSetting":"false"}
+            ]
 
