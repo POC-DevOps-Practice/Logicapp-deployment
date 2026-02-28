@@ -58,7 +58,7 @@ jobs:
       #       az group show --name "rg-rg-s12p"
 
       - name: 'get deployment package'
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v4
         with:
           name: workflow
           path: ./output/
@@ -86,7 +86,7 @@ jobs:
           echo "Deployment triggered successfully."
           
       - name: Update LogicApp Settings
-        uses: azure/appservice-settings@v1
+        uses: azure/appservice-settings@v2
         with:
           app-name: ${{ vars.LOGICAPP_NAME }}
           app-settings-json: |
