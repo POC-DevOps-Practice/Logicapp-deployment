@@ -1,4 +1,4 @@
-name: Build and deploy applicationbdbc
+name: Build and deploy application
 
 on:
   push:
@@ -115,7 +115,7 @@ jobs:
 
   Deploy-QA:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'qa'
-    needs: build
+    needs: [build, Deploy-Dev]
     runs-on: self-hosted
     environment: qa   # 🔥 Approval happens here
 
