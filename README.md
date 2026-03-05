@@ -53,3 +53,6 @@ Each of the Deployment stage will:
 - https://docs.microsoft.com/en-us/azure/logic-apps/set-up-devops-deployment-single-tenant-azure-logic-apps?tabs=github
 - https://docs.microsoft.com/en-us/azure/templates/
 
+
+
+sudo apt update && sudo apt install -y zip unzip curl && curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
