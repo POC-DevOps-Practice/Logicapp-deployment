@@ -1,6 +1,6 @@
 {
   "definition": {
-    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2019-05-01/workflowdefinition.json#",
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2023-01-31-preview/workflowdefinition.json#",
     "triggers": {
       "manual": {
         "type": "Request",
@@ -15,7 +15,6 @@
       "Response": {
         "type": "Response",
         "kind": "Http",
-        "runAfter": {},
         "inputs": {
           "statusCode": 200,
           "headers": {
@@ -24,7 +23,8 @@
           "body": {
             "message": "Hello from helloWorkflow"
           }
-        }
+        },
+        "runAfter": {}
       }
     },
     "outputs": {}
