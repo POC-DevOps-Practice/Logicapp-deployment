@@ -18,8 +18,11 @@
         "runAfter": {},
         "inputs": {
           "statusCode": 200,
+          "headers": {
+            "Content-Type": "application/json"
+          },
           "body": {
-            "message": "Hello from Logic App"
+            "message": "Hello from helloWorkflow"
           }
         }
       }
