@@ -18,11 +18,9 @@
         "inputs": {
           "statusCode": 200,
           "headers": {
-            "Content-Type": "application/json"
+            "Content-Type": "text/html"
           },
-          "body": {
-            "message": "Hello from helloWorkflow"
-          }
+          "body": "<h1>Hello from helloWorkflow</h1><p>Welcome to your Logic App!</p>"
         },
         "runAfter": {}
       }
