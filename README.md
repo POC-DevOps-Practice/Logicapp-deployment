@@ -1,4 +1,4 @@
-# Testing workflow
+# Testing workflow 2
 # Logic Apps Standard Deployment Examples
 
 Demonstrates how to automate the deployment of Logic Apps Standard into Azure.  Will cover common scenarios that need to be takend into consideration when deploying with GitHub actions
