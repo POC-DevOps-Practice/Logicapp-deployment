@@ -20,7 +20,7 @@
           "headers": {
             "Content-Type": "text/html"
           },
-          "body": "<h1>Hello from helloWorkflow</h1><p>Welcome to your Logic App Demo !</p>"
+          "body": "<h1>Hello from helloWorkflow</h1><p>Welcome to your Logic App Demo 14/04/2026!</p>"
         },
         "runAfter": {}
       }
